@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import "./App.css";
+import ButtonList from "./components/ButtonList";
+import generateArray from "./utils/people_power";
+import campaignsJSON from "./utils/campaigns.json";
 
 function App() {
+  const [campaignsArray, setCampaignsArray] = useState(
+    generateArray(100, 3, 5, campaignsJSON.campaigns)
+  );
+
+  const generatePeoplePower = () => {
+    const randomDivisorOne = Math.floor(5 * Math.random());
+    const randomDivisorTwo = Math.floor(5 * Math.random());
+    setCampaignsArray(
+      generateArray(
+        100,
+        randomDivisorOne,
+        randomDivisorTwo,
+        campaignsJSON.campaigns
+      )
+    );
+  };
+
   return (
     <div className="App">
       <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
+        <h1>38 Degrees | 100 Celebrations of People Power!</h1>
       </header>
+      <body>
+        <button className="button-people-power" onClick={generatePeoplePower}>
+          <h1>Generate some People Power!</h1>
+        </button>
+        <ButtonList campaigns={campaignsArray} />
+      </body>
     </div>
   );
 }
